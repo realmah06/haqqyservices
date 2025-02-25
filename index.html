@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HAQQY INTEGRATED SERVICES</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="logo.jpg" type="image/x-icon" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="general.css" type="text/css" media="all" />
+  <!-- Font Awesome Icons Installation -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Sweatalert Installation -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<style>
+  body{
+    background: linear-gradient(to right, #ccc, #B4B9F1);
+    display: flex;
+    justify-content: center;
+  }
+  .login-container{
+    padding: 15px 30px;
+    background-color: #fff;
+    box-shadow: 0px 0px 2px rgb(0, 0, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 35px;
+    width: 430px;
+  }
+  .login-container img{
+    height: 100px;
+    margin: 5px;
+    box-shadow: 0px 0px 3px #2D4371;
+    border-radius: 10rem;
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  .login-container h1{
+    color: #fff;
+    text-shadow: 0px 0px 5px lightcyan, 
+    0px 0px 10px darkred, 
+    0px 0px 20px darkcyan,
+    0px 0px 5px cyan;
+    padding: 7px;
+  }
+  .login-container .form-input{
+    margin: 5px;
+    padding: 7px;
+  }
+  .login-container .form-input label{
+    display: block;
+    font-size: 16px;
+    color: #aaa;
+  }
+  .login-container .form-input input{
+    padding: 8px 16px;
+    width: 90%;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 2px darkcyan;
+    border-radius: 2px;
+    font-size: 17px;
+  }
+  .toggle-password {
+    cursor: pointer;
+    position: absolute;
+    margin-left: -30px;
+    margin-top: 14px;
+  }
+  .login-container button{
+    padding: 8px 16px;
+    width: 98%;
+    border: none;
+    background-color: #253F2C;
+    color: #fff;
+    border-radius: 2px;
+  }
+  .login-container footer{
+    text-align: center;
+    color: #B9B9B9;
+  }
+  .alert{
+    font-size: 27px;
+    font-weight: 450;
+  }
+  @media screen and (max-width: 1000px){
+    body{
+      height: 80vh;
+      width: 100%;
+      align-items: center;
+    }
+  }
+</style>
+<body>
+  <div class="login-container">
+    <center>
+      <img src="logo.jpg" alt="logo.jpg">
+      <h1>HAQQY Integrated Services</h1>
+    </center>
+    <br /><br />
+    <form id="loginForm" autocomplete="off">
+      <div class="form-input">
+        <label for="Username"><i class="fa-solid fa-circle-user"></i> Username</label>
+        <input type="text" name="username" id="username" placeholder="Type Your Username" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
+      </div>
+      <div class="form-input" style="position: relative;">
+        <label for="Password"><i class="fa-solid fa-lock"></i> Password</label>
+        <input type="password" id="password" placeholder="Enter password" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
+        <span class="toggle-password" onclick="togglePassword()"><i class="fa-solid fa-eye"></i></span>
+      </div>
+      <br />
+      <a href="#" style="float: right;margin-right: 14px;text-decoration: none;">Forgot Password?</a>
+      <br />
+      <div class="form-input">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+    <br /><br />
+    <footer>
+      Copyright&copy; HAQQY 2025.
+    </footer>
+  </div>
+</body>
+<script>
+  // Show & Hide Password Toggle //
+  function togglePassword() {
+      const passwordField = document.getElementById("password");
+      if (passwordField.type === "password") {
+          passwordField.type = "text";
+      } else {
+          passwordField.type = "password";
+      }
+  }
+
+  // Login Validation //
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var usernameInput = document.getElementById("username").value.trim();
+    var passwordInput = document.getElementById("password").value.trim();
+    
+    Swal.fire({
+      icon: 'question',
+      html: `<p class="alert">Login to Dashboard?</p>`,
+      showConfirmButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#264E8C',
+      showCancelButton: true,
+      cancelButtonText: 'No',
+      cancelButtonColor: '#592323',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Processing...",
+          html: "Please wait...",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+            setTimeout(() => {
+              if (usernameInput === 'admin' && passwordInput === 'admin') {
+                Swal.fire({
+                  icon: 'success',
+                  html: `<p class="alert">Congratulations <i class="fa-solid fa-unlock"></i></p>`,
+                  timer: 5000,
+                  timerProgressBar: true
+                }).then(() => {
+                  window.location.href = "dashboard.html";
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  html: `<p class="alert">Login Failed</p>`,
+                });
+              }
+            }, 5000);
+          }
+        });
+      }
+    });
+  });
+</script>
+</html>
